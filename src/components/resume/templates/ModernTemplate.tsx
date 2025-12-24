@@ -1,19 +1,32 @@
 import { ResumeData } from '@/types/resume';
-import { Mail, Phone, MapPin, Linkedin, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Globe, User } from 'lucide-react';
 
 interface ModernTemplateProps {
   data: ResumeData;
 }
 
 export const ModernTemplate = ({ data }: ModernTemplateProps) => {
-  const { contact, education, skills, projects, experience } = data;
+  const { contact, careerObjective, education, skills, projects, experience, certifications, languages, hobbies, sports, courses, activities } = data;
+
+  const hasOptionalSections = languages.length > 0 || hobbies.length > 0 || sports.length > 0 || courses.length > 0;
 
   return (
     <div className="w-full bg-white text-gray-900 font-sans text-[10px] leading-tight flex min-h-full">
       {/* Sidebar */}
       <div className="w-[35%] bg-[#1a2744] text-white p-4 flex flex-col">
+        {/* Profile Image */}
+        {contact.profileImage && (
+          <div className="mb-3 flex justify-center">
+            <img
+              src={contact.profileImage}
+              alt="Profile"
+              className="w-20 h-20 rounded-full object-cover border-2 border-amber-400"
+            />
+          </div>
+        )}
+
         {/* Name */}
-        <div className="mb-4">
+        <div className="mb-4 text-center">
           <h1 className="text-base font-bold tracking-tight leading-none">
             {contact.fullName || 'Your Name'}
           </h1>
@@ -57,27 +70,47 @@ export const ModernTemplate = ({ data }: ModernTemplateProps) => {
         </div>
 
         {/* Skills */}
-        {skills.length > 0 && (
+        {(skills.technical.length > 0 || skills.soft.length > 0) && (
           <div className="mb-4">
             <h2 className="text-[9px] font-bold uppercase tracking-widest text-amber-400 mb-1.5">
               Skills
             </h2>
-            <div className="flex flex-wrap gap-1">
-              {skills.map((skill, index) => (
-                <span
-                  key={index}
-                  className="px-1.5 py-0.5 bg-white/10 rounded text-[8px] text-gray-200"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
+            {skills.technical.length > 0 && (
+              <div className="mb-2">
+                <p className="text-[8px] text-gray-400 mb-1">Technical</p>
+                <div className="flex flex-wrap gap-1">
+                  {skills.technical.map((skill, index) => (
+                    <span
+                      key={index}
+                      className="px-1.5 py-0.5 bg-white/10 rounded text-[8px] text-gray-200"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {skills.soft.length > 0 && (
+              <div>
+                <p className="text-[8px] text-gray-400 mb-1">Soft Skills</p>
+                <div className="flex flex-wrap gap-1">
+                  {skills.soft.map((skill, index) => (
+                    <span
+                      key={index}
+                      className="px-1.5 py-0.5 bg-amber-400/20 rounded text-[8px] text-gray-200"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
         {/* Education */}
         {education.length > 0 && (
-          <div>
+          <div className="mb-4">
             <h2 className="text-[9px] font-bold uppercase tracking-widest text-amber-400 mb-1.5">
               Education
             </h2>
@@ -96,10 +129,62 @@ export const ModernTemplate = ({ data }: ModernTemplateProps) => {
             </div>
           </div>
         )}
+
+        {/* Certifications */}
+        {certifications.length > 0 && (
+          <div className="mb-4">
+            <h2 className="text-[9px] font-bold uppercase tracking-widest text-amber-400 mb-1.5">
+              Certifications
+            </h2>
+            <div className="space-y-1.5">
+              {certifications.map((cert) => (
+                <div key={cert.id}>
+                  <p className="text-white text-[9px] font-medium">{cert.name}</p>
+                  <p className="text-gray-400 text-[8px]">{cert.issuer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Languages */}
+        {languages.length > 0 && (
+          <div className="mb-4">
+            <h2 className="text-[9px] font-bold uppercase tracking-widest text-amber-400 mb-1.5">
+              Languages
+            </h2>
+            <p className="text-gray-300 text-[9px]">{languages.join(', ')}</p>
+          </div>
+        )}
+
+        {/* Hobbies & Sports */}
+        {(hobbies.length > 0 || sports.length > 0) && (
+          <div>
+            <h2 className="text-[9px] font-bold uppercase tracking-widest text-amber-400 mb-1.5">
+              Interests
+            </h2>
+            {hobbies.length > 0 && (
+              <p className="text-gray-300 text-[9px]">{hobbies.join(', ')}</p>
+            )}
+            {sports.length > 0 && (
+              <p className="text-gray-300 text-[9px] mt-1">{sports.join(', ')}</p>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Main Content */}
       <div className="flex-1 p-4">
+        {/* Career Objective */}
+        {careerObjective.objective && (
+          <section className="mb-4">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-amber-600 border-b-2 border-amber-400 pb-0.5 mb-2">
+              Career Objective
+            </h2>
+            <p className="text-gray-700">{careerObjective.objective}</p>
+          </section>
+        )}
+
         {/* Experience */}
         {experience.length > 0 && (
           <section className="mb-4">
@@ -127,7 +212,7 @@ export const ModernTemplate = ({ data }: ModernTemplateProps) => {
 
         {/* Projects */}
         {projects.length > 0 && (
-          <section>
+          <section className="mb-4">
             <h2 className="text-xs font-bold uppercase tracking-wider text-amber-600 border-b-2 border-amber-400 pb-0.5 mb-2">
               Projects
             </h2>
@@ -147,6 +232,41 @@ export const ModernTemplate = ({ data }: ModernTemplateProps) => {
                 </div>
               ))}
             </div>
+          </section>
+        )}
+
+        {/* Activities */}
+        {activities.length > 0 && (
+          <section className="mb-4">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-amber-600 border-b-2 border-amber-400 pb-0.5 mb-2">
+              Activities & Participation
+            </h2>
+            <div className="space-y-1.5">
+              {activities.map((activity) => (
+                <div key={activity.id}>
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-gray-700">
+                      <span className="font-semibold">{activity.title}</span>
+                      <span className="text-amber-600 text-[9px] ml-2">({activity.type})</span>
+                    </span>
+                    {activity.date && <span className="text-gray-500 text-[9px]">{activity.date}</span>}
+                  </div>
+                  {activity.description && (
+                    <p className="text-gray-600 text-[9px]">{activity.description}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Courses */}
+        {courses.length > 0 && (
+          <section>
+            <h2 className="text-xs font-bold uppercase tracking-wider text-amber-600 border-b-2 border-amber-400 pb-0.5 mb-2">
+              Courses
+            </h2>
+            <p className="text-gray-700">{courses.join(' • ')}</p>
           </section>
         )}
       </div>

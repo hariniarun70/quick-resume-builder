@@ -1,17 +1,21 @@
 import { useState } from 'react';
 import { ResumeData, initialResumeData } from '@/types/resume';
 import { ContactForm } from '@/components/resume/ContactForm';
+import { CareerObjectiveForm } from '@/components/resume/CareerObjectiveForm';
 import { EducationForm } from '@/components/resume/EducationForm';
 import { SkillsForm } from '@/components/resume/SkillsForm';
 import { ProjectsForm } from '@/components/resume/ProjectsForm';
 import { ExperienceForm } from '@/components/resume/ExperienceForm';
+import { CertificationsForm } from '@/components/resume/CertificationsForm';
+import { ActivitiesForm } from '@/components/resume/ActivitiesForm';
+import { OptionalSectionsForm } from '@/components/resume/OptionalSectionsForm';
 import { TemplateSelector } from '@/components/resume/TemplateSelector';
 import { ResumePreview } from '@/components/resume/ResumePreview';
 import { StepIndicator } from '@/components/resume/StepIndicator';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, FileText, Sparkles } from 'lucide-react';
 
-const STEPS = ['Contact', 'Education', 'Skills', 'Projects', 'Experience', 'Template'];
+const STEPS = ['Contact', 'Objective', 'Education', 'Skills', 'Experience', 'Projects', 'Certifications', 'Activities', 'Optional', 'Template'];
 
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -45,23 +49,23 @@ const Index = () => {
         );
       case 1:
         return (
+          <CareerObjectiveForm
+            data={resumeData.careerObjective}
+            onChange={(careerObjective) => setResumeData({ ...resumeData, careerObjective })}
+          />
+        );
+      case 2:
+        return (
           <EducationForm
             data={resumeData.education}
             onChange={(education) => setResumeData({ ...resumeData, education })}
           />
         );
-      case 2:
+      case 3:
         return (
           <SkillsForm
             data={resumeData.skills}
             onChange={(skills) => setResumeData({ ...resumeData, skills })}
-          />
-        );
-      case 3:
-        return (
-          <ProjectsForm
-            data={resumeData.projects}
-            onChange={(projects) => setResumeData({ ...resumeData, projects })}
           />
         );
       case 4:
@@ -72,6 +76,40 @@ const Index = () => {
           />
         );
       case 5:
+        return (
+          <ProjectsForm
+            data={resumeData.projects}
+            onChange={(projects) => setResumeData({ ...resumeData, projects })}
+          />
+        );
+      case 6:
+        return (
+          <CertificationsForm
+            data={resumeData.certifications}
+            onChange={(certifications) => setResumeData({ ...resumeData, certifications })}
+          />
+        );
+      case 7:
+        return (
+          <ActivitiesForm
+            data={resumeData.activities}
+            onChange={(activities) => setResumeData({ ...resumeData, activities })}
+          />
+        );
+      case 8:
+        return (
+          <OptionalSectionsForm
+            languages={resumeData.languages}
+            hobbies={resumeData.hobbies}
+            sports={resumeData.sports}
+            courses={resumeData.courses}
+            onLanguagesChange={(languages) => setResumeData({ ...resumeData, languages })}
+            onHobbiesChange={(hobbies) => setResumeData({ ...resumeData, hobbies })}
+            onSportsChange={(sports) => setResumeData({ ...resumeData, sports })}
+            onCoursesChange={(courses) => setResumeData({ ...resumeData, courses })}
+          />
+        );
+      case 9:
         return (
           <TemplateSelector
             selected={resumeData.template}
@@ -96,7 +134,7 @@ const Index = () => {
           </div>
           
           {!showPreview && (
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <StepIndicator
                 steps={STEPS}
                 currentStep={currentStep}
@@ -115,7 +153,7 @@ const Index = () => {
         
         {/* Mobile Step Indicator */}
         {!showPreview && (
-          <div className="md:hidden pb-3 px-4 overflow-x-auto">
+          <div className="lg:hidden pb-3 px-4 overflow-x-auto">
             <StepIndicator steps={STEPS} currentStep={currentStep} onStepClick={setCurrentStep} />
           </div>
         )}

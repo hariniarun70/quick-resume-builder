@@ -1,7 +1,9 @@
+import { useRef } from 'react';
 import { ContactInfo } from '@/types/resume';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { User, Mail, Phone, MapPin, Linkedin, Globe } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { User, Mail, Phone, MapPin, Linkedin, Globe, Camera, X } from 'lucide-react';
 
 interface ContactFormProps {
   data: ContactInfo;
@@ -9,8 +11,28 @@ interface ContactFormProps {
 }
 
 export const ContactForm = ({ data, onChange }: ContactFormProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const handleChange = (field: keyof ContactInfo, value: string) => {
     onChange({ ...data, [field]: value });
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onChange({ ...data, profileImage: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    onChange({ ...data, profileImage: '' });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   return (
@@ -18,6 +40,55 @@ export const ContactForm = ({ data, onChange }: ContactFormProps) => {
       <div className="space-y-2">
         <h2 className="text-2xl font-display font-semibold text-foreground">Personal Information</h2>
         <p className="text-muted-foreground font-body">Let's start with your basic contact details</p>
+      </div>
+
+      {/* Profile Image Upload */}
+      <div className="flex items-start gap-6">
+        <div className="relative">
+          <div className="w-24 h-24 rounded-xl border-2 border-dashed border-border bg-secondary/30 flex items-center justify-center overflow-hidden">
+            {data.profileImage ? (
+              <img
+                src={data.profileImage}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <User className="h-8 w-8 text-muted-foreground" />
+            )}
+          </div>
+          {data.profileImage && (
+            <button
+              onClick={removeImage}
+              className="absolute -top-2 -right-2 w-6 h-6 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center shadow-md hover:bg-destructive/90 transition-colors"
+            >
+              <X className="h-3 w-3" />
+            </button>
+          )}
+        </div>
+        <div className="flex-1 space-y-2">
+          <Label className="flex items-center gap-2 text-foreground font-medium">
+            <Camera className="h-4 w-4 text-accent" />
+            Profile Photo (optional)
+          </Label>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+          />
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => fileInputRef.current?.click()}
+            className="text-sm"
+          >
+            {data.profileImage ? 'Change Photo' : 'Upload Photo'}
+          </Button>
+          <p className="text-xs text-muted-foreground">
+            Recommended: Square image, at least 200x200px
+          </p>
+        </div>
       </div>
 
       <div className="grid gap-5">

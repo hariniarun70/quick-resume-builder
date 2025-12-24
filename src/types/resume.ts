@@ -5,6 +5,11 @@ export interface ContactInfo {
   location: string;
   linkedin?: string;
   website?: string;
+  profileImage?: string;
+}
+
+export interface CareerObjective {
+  objective: string;
 }
 
 export interface Education {
@@ -35,12 +40,40 @@ export interface Project {
   link?: string;
 }
 
+export interface Certification {
+  id: string;
+  name: string;
+  issuer: string;
+  date: string;
+  link?: string;
+}
+
+export interface Skills {
+  technical: string[];
+  soft: string[];
+}
+
+export interface Activity {
+  id: string;
+  type: 'paper' | 'workshop' | 'hackathon' | 'club' | 'extracurricular' | 'cocurricular';
+  title: string;
+  description?: string;
+  date?: string;
+}
+
 export interface ResumeData {
   contact: ContactInfo;
+  careerObjective: CareerObjective;
   education: Education[];
-  skills: string[];
+  skills: Skills;
   projects: Project[];
   experience: Experience[];
+  certifications: Certification[];
+  languages: string[];
+  hobbies: string[];
+  sports: string[];
+  courses: string[];
+  activities: Activity[];
   template: 'classic' | 'modern';
 }
 
@@ -52,10 +85,23 @@ export const initialResumeData: ResumeData = {
     location: '',
     linkedin: '',
     website: '',
+    profileImage: '',
+  },
+  careerObjective: {
+    objective: '',
   },
   education: [],
-  skills: [],
+  skills: {
+    technical: [],
+    soft: [],
+  },
   projects: [],
   experience: [],
+  certifications: [],
+  languages: [],
+  hobbies: [],
+  sports: [],
+  courses: [],
+  activities: [],
   template: 'classic',
 };
