@@ -3,7 +3,7 @@ import { ContactInfo } from '@/types/resume';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { User, Mail, Phone, MapPin, Linkedin, Globe, Camera, X } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Linkedin, Globe, Camera, X, Github } from 'lucide-react';
 
 interface ContactFormProps {
   data: ContactInfo;
@@ -163,17 +163,30 @@ export const ContactForm = ({ data, onChange }: ContactFormProps) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="website" className="flex items-center gap-2 text-foreground font-medium">
-              <Globe className="h-4 w-4 text-accent" />
-              Website (optional)
+            <Label htmlFor="github" className="flex items-center gap-2 text-foreground font-medium">
+              <Github className="h-4 w-4 text-accent" />
+              GitHub (optional)
             </Label>
             <Input
-              id="website"
-              placeholder="johndoe.com"
-              value={data.website || ''}
-              onChange={(e) => handleChange('website', e.target.value)}
+              id="github"
+              placeholder="github.com/johndoe"
+              value={data.github || ''}
+              onChange={(e) => handleChange('github', e.target.value)}
             />
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="website" className="flex items-center gap-2 text-foreground font-medium">
+            <Globe className="h-4 w-4 text-accent" />
+            Website (optional)
+          </Label>
+          <Input
+            id="website"
+            placeholder="johndoe.com"
+            value={data.website || ''}
+            onChange={(e) => handleChange('website', e.target.value)}
+          />
         </div>
       </div>
     </div>
