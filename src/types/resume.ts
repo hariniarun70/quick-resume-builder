@@ -4,6 +4,7 @@ export interface ContactInfo {
   phone: string;
   location: string;
   linkedin?: string;
+  github?: string;
   website?: string;
   profileImage?: string;
 }
@@ -84,6 +85,7 @@ export const initialResumeData: ResumeData = {
     phone: '',
     location: '',
     linkedin: '',
+    github: '',
     website: '',
     profileImage: '',
   },
