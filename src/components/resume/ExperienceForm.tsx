@@ -47,8 +47,8 @@ export const ExperienceForm = ({ data, onChange }: ExperienceFormProps) => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="space-y-2">
-        <h2 className="text-2xl font-display font-semibold text-foreground">Experience</h2>
-        <p className="text-muted-foreground font-body">Add your work experience</p>
+        <h2 className="text-2xl font-display font-semibold text-foreground">Experience / Internships</h2>
+        <p className="text-muted-foreground font-body">Add your work experience or internships (optional)</p>
       </div>
 
       <div className="space-y-6">
@@ -60,7 +60,7 @@ export const ExperienceForm = ({ data, onChange }: ExperienceFormProps) => {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Briefcase className="h-5 w-5 text-accent" />
-                <span className="font-medium text-foreground">Experience {index + 1}</span>
+                <span className="font-medium text-foreground">Experience / Internship {index + 1}</span>
               </div>
               <Button
                 variant="ghost"
@@ -152,7 +152,7 @@ export const ExperienceForm = ({ data, onChange }: ExperienceFormProps) => {
           className="w-full border-dashed border-2 h-14 hover:border-accent hover:text-accent"
         >
           <Plus className="h-4 w-4 mr-2" />
-          Add Experience
+          Add Experience / Internship
         </Button>
       </div>
     </div>
