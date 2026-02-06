@@ -10,25 +10,8 @@ export const ClassicTemplate = ({ data }: ClassicTemplateProps) => {
 
   const hasOptionalSections = languages.length > 0 || hobbies.length > 0 || sports.length > 0 || courses.length > 0;
 
-  // Calculate content density to adjust font size
-  const contentSections = [
-    careerObjective.objective ? 1 : 0,
-    education.length,
-    experience.length,
-    projects.length,
-    certifications.length,
-    activities.length,
-    skills.technical.length > 0 || skills.soft.length > 0 ? 1 : 0,
-    hasOptionalSections ? 1 : 0,
-  ].reduce((a, b) => a + b, 0);
-
-  const isLightContent = contentSections <= 4;
-  const baseFontSize = isLightContent ? 'text-[14px]' : 'text-[12px]';
-  const smallFontSize = isLightContent ? 'text-[13px]' : 'text-[11px]';
-  const tinyFontSize = isLightContent ? 'text-[12px]' : 'text-[10px]';
-
   return (
-    <div className={`w-full bg-white text-gray-900 font-sans ${baseFontSize} leading-relaxed p-6`}>
+    <div className="w-full bg-white text-gray-900 font-sans text-[12px] leading-relaxed p-6" style={{ minHeight: '297mm' }}>
       {/* Header with Profile Image */}
       <div className="text-center border-b-2 border-gray-800 pb-4 mb-5">
         <div className="flex items-center justify-center gap-4">
@@ -36,14 +19,14 @@ export const ClassicTemplate = ({ data }: ClassicTemplateProps) => {
             <img
               src={contact.profileImage}
               alt="Profile"
-              className="w-20 h-20 rounded-full object-cover border-2 border-gray-300"
+              className="w-20 h-20 object-cover border-2 border-gray-300"
             />
           )}
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 font-serif">
+            <h1 className="font-bold tracking-tight text-gray-900 font-serif" style={{ fontSize: '28px', lineHeight: '1.2' }}>
               {contact.fullName || 'Your Name'}
             </h1>
-            <div className={`flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mt-2 text-gray-600 ${smallFontSize}`}>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mt-2 text-gray-600 text-[12px]">
               {contact.email && (
                 <span className="flex items-center gap-1">
                   <Mail className="h-3 w-3" />
@@ -88,29 +71,29 @@ export const ClassicTemplate = ({ data }: ClassicTemplateProps) => {
       {/* Career Objective */}
       {careerObjective.objective && (
         <section className="mb-5">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif">
+          <h2 className="font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif" style={{ fontSize: '13px' }}>
             Career Objective
           </h2>
-          <p className={`text-gray-700 ${smallFontSize}`}>{careerObjective.objective}</p>
+          <p className="text-gray-700 text-[12px]">{careerObjective.objective}</p>
         </section>
       )}
 
       {/* Education */}
       {education.length > 0 && (
         <section className="mb-5">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif">
+          <h2 className="font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif" style={{ fontSize: '13px' }}>
             Education
           </h2>
           <div className="space-y-2.5">
             {education.map((edu) => (
               <div key={edu.id}>
                 <div className="flex justify-between items-baseline">
-                  <h3 className={`font-bold text-gray-900 ${baseFontSize}`}>{edu.institution}</h3>
-                  <span className={`text-gray-500 ${tinyFontSize}`}>
+                  <h3 className="font-bold text-gray-900 text-[12px]">{edu.institution}</h3>
+                  <span className="text-gray-500 text-[12px]">
                     {edu.startDate} — {edu.endDate}
                   </span>
                 </div>
-                <p className={`text-gray-700 ${smallFontSize}`}>
+                <p className="text-gray-700 text-[12px]">
                   {edu.degree} in {edu.field}
                   {edu.gpa && <span className="text-gray-500"> • GPA: {edu.gpa}</span>}
                 </p>
@@ -122,22 +105,22 @@ export const ClassicTemplate = ({ data }: ClassicTemplateProps) => {
 
       {/* Experience / Internships */}
       {experience.length > 0 && (
-        <section className="mb-5">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif">
+        <section className="mb-5" style={{ pageBreakInside: 'avoid' }}>
+          <h2 className="font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif" style={{ fontSize: '13px' }}>
             Experience / Internships
           </h2>
           <div className="space-y-3">
             {experience.map((exp) => (
               <div key={exp.id}>
                 <div className="flex justify-between items-baseline">
-                  <h3 className={`font-bold text-gray-900 ${baseFontSize}`}>{exp.position}</h3>
-                  <span className={`text-gray-500 ${tinyFontSize}`}>
+                  <h3 className="font-bold text-gray-900 text-[12px]">{exp.position}</h3>
+                  <span className="text-gray-500 text-[12px]">
                     {exp.startDate} — {exp.current ? 'Present' : exp.endDate}
                   </span>
                 </div>
-                <p className={`text-gray-700 italic ${smallFontSize}`}>{exp.company}</p>
+                <p className="text-gray-700 italic text-[12px]">{exp.company}</p>
                 {exp.description && (
-                  <p className={`mt-1 text-gray-600 whitespace-pre-line ${smallFontSize}`}>{exp.description}</p>
+                  <p className="mt-1 text-gray-600 whitespace-pre-line text-[12px]">{exp.description}</p>
                 )}
               </div>
             ))}
@@ -147,22 +130,22 @@ export const ClassicTemplate = ({ data }: ClassicTemplateProps) => {
 
       {/* Projects */}
       {projects.length > 0 && (
-        <section className="mb-5">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif">
+        <section className="mb-5" style={{ pageBreakInside: 'avoid' }}>
+          <h2 className="font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif" style={{ fontSize: '13px' }}>
             Projects
           </h2>
           <div className="space-y-2.5">
             {projects.map((proj) => (
               <div key={proj.id}>
                 <div className="flex items-baseline gap-2">
-                  <h3 className={`font-bold text-gray-900 ${baseFontSize}`}>{proj.name}</h3>
+                  <h3 className="font-bold text-gray-900 text-[12px]">{proj.name}</h3>
                   {proj.link && (
-                    <span className={`text-gray-500 ${tinyFontSize}`}>{proj.link}</span>
+                    <span className="text-gray-500 text-[12px]">{proj.link}</span>
                   )}
                 </div>
-                <p className={`text-gray-500 ${tinyFontSize} italic`}>{proj.technologies}</p>
+                <p className="text-gray-500 text-[12px] italic">{proj.technologies}</p>
                 {proj.description && (
-                  <p className={`text-gray-600 ${smallFontSize}`}>{proj.description}</p>
+                  <p className="text-gray-600 text-[12px]">{proj.description}</p>
                 )}
               </div>
             ))}
@@ -173,17 +156,17 @@ export const ClassicTemplate = ({ data }: ClassicTemplateProps) => {
       {/* Skills */}
       {(skills.technical.length > 0 || skills.soft.length > 0) && (
         <section className="mb-5">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif">
+          <h2 className="font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif" style={{ fontSize: '13px' }}>
             Skills
           </h2>
           <div className="space-y-1.5">
             {skills.technical.length > 0 && (
-              <p className={`text-gray-700 ${smallFontSize}`}>
+              <p className="text-gray-700 text-[12px]">
                 <span className="font-bold">Technical:</span> {skills.technical.join(' • ')}
               </p>
             )}
             {skills.soft.length > 0 && (
-              <p className={`text-gray-700 ${smallFontSize}`}>
+              <p className="text-gray-700 text-[12px]">
                 <span className="font-bold">Soft Skills:</span> {skills.soft.join(' • ')}
               </p>
             )}
@@ -193,17 +176,17 @@ export const ClassicTemplate = ({ data }: ClassicTemplateProps) => {
 
       {/* Certifications */}
       {certifications.length > 0 && (
-        <section className="mb-5">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif">
+        <section className="mb-5" style={{ pageBreakInside: 'avoid' }}>
+          <h2 className="font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif" style={{ fontSize: '13px' }}>
             Certifications
           </h2>
           <div className="space-y-1.5">
             {certifications.map((cert) => (
               <div key={cert.id} className="flex justify-between items-baseline">
-                <span className={`text-gray-700 ${smallFontSize}`}>
+                <span className="text-gray-700 text-[12px]">
                   <span className="font-bold">{cert.name}</span> — {cert.issuer}
                 </span>
-                {cert.date && <span className={`text-gray-500 ${tinyFontSize}`}>{cert.date}</span>}
+                {cert.date && <span className="text-gray-500 text-[12px]">{cert.date}</span>}
               </div>
             ))}
           </div>
@@ -212,22 +195,22 @@ export const ClassicTemplate = ({ data }: ClassicTemplateProps) => {
 
       {/* Activities */}
       {activities.length > 0 && (
-        <section className="mb-5">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif">
+        <section className="mb-5" style={{ pageBreakInside: 'avoid' }}>
+          <h2 className="font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif" style={{ fontSize: '13px' }}>
             Activities & Participation
           </h2>
           <div className="space-y-2">
             {activities.map((activity) => (
               <div key={activity.id}>
                 <div className="flex justify-between items-baseline">
-                  <span className={`text-gray-700 ${smallFontSize}`}>
+                  <span className="text-gray-700 text-[12px]">
                     <span className="font-bold">{activity.title}</span>
-                    <span className={`text-gray-500 ${tinyFontSize} ml-2`}>({activity.type.replace(/([A-Z])/g, ' $1').trim()})</span>
+                    <span className="text-gray-500 text-[12px] ml-2">({activity.type.replace(/([A-Z])/g, ' $1').trim()})</span>
                   </span>
-                  {activity.date && <span className={`text-gray-500 ${tinyFontSize}`}>{activity.date}</span>}
+                  {activity.date && <span className="text-gray-500 text-[12px]">{activity.date}</span>}
                 </div>
                 {activity.description && (
-                  <p className={`text-gray-600 ${tinyFontSize}`}>{activity.description}</p>
+                  <p className="text-gray-600 text-[12px]">{activity.description}</p>
                 )}
               </div>
             ))}
@@ -238,27 +221,27 @@ export const ClassicTemplate = ({ data }: ClassicTemplateProps) => {
       {/* Optional Sections */}
       {hasOptionalSections && (
         <section>
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif">
+          <h2 className="font-bold uppercase tracking-wider text-gray-800 border-b border-gray-300 pb-1 mb-2 font-serif" style={{ fontSize: '13px' }}>
             Additional Information
           </h2>
           <div className="space-y-1.5">
             {languages.length > 0 && (
-              <p className={`text-gray-700 ${smallFontSize}`}>
+              <p className="text-gray-700 text-[12px]">
                 <span className="font-bold">Languages:</span> {languages.join(', ')}
               </p>
             )}
             {courses.length > 0 && (
-              <p className={`text-gray-700 ${smallFontSize}`}>
+              <p className="text-gray-700 text-[12px]">
                 <span className="font-bold">Courses:</span> {courses.join(', ')}
               </p>
             )}
             {hobbies.length > 0 && (
-              <p className={`text-gray-700 ${smallFontSize}`}>
+              <p className="text-gray-700 text-[12px]">
                 <span className="font-bold">Hobbies:</span> {hobbies.join(', ')}
               </p>
             )}
             {sports.length > 0 && (
-              <p className={`text-gray-700 ${smallFontSize}`}>
+              <p className="text-gray-700 text-[12px]">
                 <span className="font-bold">Sports:</span> {sports.join(', ')}
               </p>
             )}
