@@ -110,7 +110,6 @@ export const ResumePreview = ({ data }: ResumePreviewProps) => {
           <div
             ref={resumeRef}
             className="w-full"
-            style={{ aspectRatio: '8.5/11', minHeight: '280mm' }}
           >
             {data.template === 'classic' ? (
               <ClassicTemplate data={data} />
