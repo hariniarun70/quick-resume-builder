@@ -12,6 +12,7 @@ import { OptionalSectionsForm } from '@/components/resume/OptionalSectionsForm';
 import { TemplateSelector } from '@/components/resume/TemplateSelector';
 import { ResumePreview } from '@/components/resume/ResumePreview';
 import { StepIndicator } from '@/components/resume/StepIndicator';
+import { ResumeUpload } from '@/components/resume/ResumeUpload';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, FileText, Sparkles } from 'lucide-react';
 
@@ -21,6 +22,28 @@ const Index = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
   const [showPreview, setShowPreview] = useState(false);
+
+  const handleImportResume = (data: Partial<ResumeData>) => {
+    setResumeData((prev) => ({
+      ...prev,
+      contact: {
+        ...prev.contact,
+        ...data.contact,
+        profileImage: prev.contact.profileImage, // Keep existing photo
+      },
+      careerObjective: data.careerObjective || prev.careerObjective,
+      education: data.education?.length ? data.education : prev.education,
+      skills: data.skills || prev.skills,
+      projects: data.projects?.length ? data.projects : prev.projects,
+      experience: data.experience?.length ? data.experience : prev.experience,
+      certifications: data.certifications?.length ? data.certifications : prev.certifications,
+      languages: data.languages?.length ? data.languages : prev.languages,
+      hobbies: data.hobbies?.length ? data.hobbies : prev.hobbies,
+      sports: data.sports?.length ? data.sports : prev.sports,
+      courses: data.courses?.length ? data.courses : prev.courses,
+      activities: data.activities?.length ? data.activities : prev.activities,
+    }));
+  };
 
   const handleNext = () => {
     if (currentStep < STEPS.length - 1) {
@@ -133,17 +156,18 @@ const Index = () => {
             <span className="font-display font-bold text-xl text-foreground">ResumeCraft</span>
           </div>
           
-          {!showPreview && (
-            <div className="hidden lg:block">
-              <StepIndicator
-                steps={STEPS}
-                currentStep={currentStep}
-                onStepClick={setCurrentStep}
-              />
+          {!showPreview ? (
+            <div className="flex items-center gap-3">
+              <ResumeUpload onDataExtracted={handleImportResume} />
+              <div className="hidden lg:block">
+                <StepIndicator
+                  steps={STEPS}
+                  currentStep={currentStep}
+                  onStepClick={setCurrentStep}
+                />
+              </div>
             </div>
-          )}
-
-          {showPreview && (
+          ) : (
             <span className="text-sm font-medium text-accent flex items-center gap-1.5">
               <Sparkles className="h-4 w-4" />
               Preview Mode
